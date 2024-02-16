@@ -32,9 +32,41 @@ a:visited {
 }
 
 .comment {
-  opacity: 0.2;
+  opacity: 0.3;
+  line-height: 1em;
+  padding: 0;
+  margin: 0;
 }
 
 .smaller {
   font-size: 0.8em;
+}
+
+#stopRandomLink {
+  height: 0;
+  display: block;
+  overflow: hidden;
+}
+
+#cursor {
+  background-color: #efefe7;
+  display: inline-block;
+  height: 1em;
+  width: 8px;
+  animation: blink 500ms alternate infinite;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  49% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
 }
