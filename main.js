@@ -1,24 +1,92 @@
-import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
+import './style.scss';
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+function workYearDiff() {
+  const today = new Date();
+  document.querySelector('#yearDiff').innerHTML = today.getFullYear() - 2008;
+}
 
-setupCounter(document.querySelector('#counter'))
+let doRandom = true;
+const randomChars = 'abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()_+-={}[]:"|;\\'.split('');
+const originalHeader = 'criticalsession'.split('');
+let currHeader = 'criticalsession'.split('');
+let timer = null;
+let iter = 0;
+function randomizeHeader() {
+  if (!doRandom) {
+    document.querySelector('h1').innerHTML = originalHeader.join('');
+    return;
+  }
+
+  if (iter !== -1) {
+    if (iter < 5) {
+      ++iter;
+    } else {
+      iter = -1;
+      document.querySelector('#stopRandomLink').style.height = '30px';
+    }
+  }
+
+  // revert
+  for (let i = 0; i < currHeader.length; ++i) {
+    if (currHeader[i] != originalHeader[i]) {
+      if (Math.floor(Math.random() * 100) > 40) {
+        currHeader[i] = originalHeader[i];
+      }
+    }
+  }
+
+  // randomize
+  for (let i = 0; i < currHeader.length; ++i) {
+    if (Math.floor(Math.random() * 100) > 90) {
+      currHeader[i] = randomChars[Math.floor(Math.random() * randomChars.length)];
+    }
+  }
+
+  // build
+  let html = '';
+  for (let i = 0; i < currHeader.length; ++i) {
+    html += currHeader[i] === originalHeader[i] ? currHeader[i] : `<span>${currHeader[i]}</span>`;
+  }
+
+  if (Math.floor(Math.random() * 100) > 90) {
+    switch (Math.floor(Math.random() * 5)) {
+      case 0:
+        html = `<span>[</span>${html}<span>]</span>`;
+        break;
+      case 1:
+        html = `<span>></span>${html}`;
+        break;
+      case 2:
+        html = `<span>${html}</span>`;
+        break;
+      case 3:
+        html = html.toUpperCase();
+        break;
+      case 4:
+        html = `<span>500: server error</span>`;
+        break;
+    }
+  }
+
+  document.querySelector('h1').innerHTML = html;
+  if (doRandom) {
+    timer = setTimeout(randomizeHeader, Math.floor(Math.random() * 500) + 500);
+  }
+}
+
+function stopRandom() {
+  doRandom = false;
+  clearTimeout(timer);
+  document.querySelector('h1').innerHTML = 'ok... :(';
+  document.querySelector('#stopRandomLink').style.height = 0;
+  document.querySelector('#stopRandomComment').style.height = '30px';
+  setTimeout(randomizeHeader, 1500);
+}
+
+function removeDescription() {}
+
+workYearDiff();
+setTimeout(randomizeHeader, 1000);
+
+document.querySelector('#stopRandomLink').onclick = stopRandom;
+document.querySelector('#betterDescriptionLink').onclick = removeDescription;
