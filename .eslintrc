@@ -1,0 +1,15 @@
+{
+	"extends": [
+		"eslint:recommended",
+		"eslint-config-prettier"
+	],
+	"settings": {
+	},
+	"import/resolver": {
+		"node": {
+			"extensions": [
+				".js"
+			]
+		}
+	}
+}

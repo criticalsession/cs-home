@@ -1,0 +1,40 @@
+body {
+  background-color: #17171f;
+  color: #efefe7;
+  padding: 10px;
+  line-height: 1.5em;
+  font-family: monospace;
+  font-size: 18px;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+h1 {
+  color: lime;
+  font-size: 36px;
+  span {
+    opacity: 0.4;
+  }
+}
+
+a,
+a:active,
+a:visited {
+  color: rgb(255, 174, 0);
+  transition: all 200ms;
+
+  &:hover {
+    color: rgb(255, 206, 99);
+  }
+}
+
+.comment {
+  opacity: 0.2;
+}
+
+.smaller {
+  font-size: 0.8em;
+}
