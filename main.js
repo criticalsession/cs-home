@@ -26,54 +26,63 @@ function randomizeHeader() {
     }
   }
 
-  // revert
-  for (let i = 0; i < currHeader.length; ++i) {
-    if (currHeader[i] != originalHeader[i]) {
-      if (rand(100) > 40) {
-        currHeader[i] = originalHeader[i];
+  let html = '';
+  if (themes[currentTheme].themeClass !== 'matrix') {
+    if (themes[currentTheme].themeClass !== 'dance') {
+      // revert
+      for (let i = 0; i < currHeader.length; ++i) {
+        if (currHeader[i] != originalHeader[i]) {
+          if (rand(100) > 40) {
+            currHeader[i] = originalHeader[i];
+          }
+        }
       }
     }
-  }
 
-  // randomize
-  for (let i = 0; i < currHeader.length; ++i) {
-    if (rand(100) > 90) {
-      currHeader[i] = randomChars[rand(randomChars.length)];
+    // randomize
+    for (let i = 0; i < currHeader.length; ++i) {
+      if (rand(100) > 90) {
+        currHeader[i] = randomChars[rand(randomChars.length)];
+      }
     }
-  }
 
-  // build
-  let html = '';
-  for (let i = 0; i < currHeader.length; ++i) {
-    html += currHeader[i] === originalHeader[i] ? currHeader[i] : `<span>${currHeader[i]}</span>`;
-  }
-
-  if (rand(100) > 80) {
-    switch (rand(6)) {
-      case 0:
-        html = `<span>[</span>${html}<span>]</span>`;
-        break;
-      case 1:
-        html = `<span>></span>${html}`;
-        break;
-      case 2:
-        html = `<span>500: server error</span>`;
-        break;
-      case 3:
-        html = `<span>  (╯°□°)╯︵ ┻━┻ </span>`;
-        break;
-      case 4:
-        html = `<span>   send help   </span>`;
-        break;
-      case 5:
-        html = `<span>'*.,.*'¨'*.,.*'</span>`;
-        break;
+    // build
+    for (let i = 0; i < currHeader.length; ++i) {
+      html += currHeader[i] === originalHeader[i] ? currHeader[i] : `<span>${currHeader[i]}</span>`;
     }
+
+    if (rand(100) > 80) {
+      switch (rand(6)) {
+        case 0:
+          html = `<span>[</span>${html}<span>]</span>`;
+          break;
+        case 1:
+          html = `<span>></span>${html}`;
+          break;
+        case 2:
+          html = `<span>500: server error</span>`;
+          break;
+        case 3:
+          html = `<span>  (╯°□°)╯︵ ┻━┻ </span>`;
+          break;
+        case 4:
+          html = `<span>   send help   </span>`;
+          break;
+        case 5:
+          html = `<span>'*.,.*'¨'*.,.*'</span>`;
+          break;
+      }
+    }
+  } else {
+    // if matrix theme
+    html = originalHeader.map(() => rand(2)).join('');
   }
 
   document.querySelector('h1').innerHTML = html;
   if (doRandom) {
-    timer = setTimeout(randomizeHeader, rand(500) + 500);
+    const speed =
+      themes[currentTheme].themeClass === 'dance' || themes[currentTheme].themeClass === 'matrix' ? 50 : 500;
+    timer = setTimeout(randomizeHeader, rand(speed) + speed);
   }
 }
 
@@ -205,16 +214,20 @@ function setNextTheme() {
 
   if (themes[currentTheme].themeClass === 'dance') {
     jiggle();
+  } else if (themes[currentTheme].themeClass === 'matrix') {
+    document.querySelector('h1').innerHTML = '101011101100111';
   }
 }
 
 let jiggleTimer = null;
 function jiggle() {
-  document.querySelectorAll('.container *:not(header):not(.theme-select):not(.theme-select > i)').forEach((p) => {
-    p.style.transform = `rotate(${rand(14) - 7}deg)`;
-    p.style.marginTop = `${rand(20)}px`;
-    p.style.color = `rgb(${rand(255)} ${rand(255)} ${rand(255)})`;
-  });
+  document
+    .querySelectorAll('.container *:not(header):not(.theme-select):not(.theme-select > i):not(#yearDiff)')
+    .forEach((p) => {
+      p.style.transform = `rotate(${rand(14) - 7}deg)`;
+      p.style.marginTop = `${rand(20)}px`;
+      p.style.color = `rgb(${rand(255)} ${rand(255)} ${rand(255)})`;
+    });
 
   jiggleTimer = setTimeout(jiggle, 500);
 }
