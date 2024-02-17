@@ -113,6 +113,7 @@ body.light {
 body.matrix {
   background-color: #000;
   color: #0f0;
+  text-shadow: 0 0 10px #0f0;
 
   h1 {
     color: #0f0;
@@ -124,7 +125,8 @@ body.matrix {
     color: #0f0;
 
     &:hover {
-      color: #0f0;
+      color: #6f6;
+      text-shadow: 0 0 10px #6f6;
     }
   }
 
