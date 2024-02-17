@@ -7,7 +7,7 @@ function workYearDiff() {
 
 let doRandom = true;
 const randomChars = 'abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()_+-={}[]:"|;\\'.split('');
-const originalHeader = 'criticalsession'.split('');
+let originalHeader = 'criticalsession'.split('');
 let currHeader = 'criticalsession'.split('');
 let timer = null;
 let iter = 0;
@@ -28,13 +28,11 @@ function randomizeHeader() {
 
   let html = '';
   if (themes[currentTheme].themeClass !== 'matrix') {
-    if (themes[currentTheme].themeClass !== 'dance') {
-      // revert
-      for (let i = 0; i < currHeader.length; ++i) {
-        if (currHeader[i] != originalHeader[i]) {
-          if (rand(100) > 20) {
-            currHeader[i] = originalHeader[i];
-          }
+    // revert
+    for (let i = 0; i < currHeader.length; ++i) {
+      if (currHeader[i] != originalHeader[i]) {
+        if (rand(100) > 20) {
+          currHeader[i] = originalHeader[i];
         }
       }
     }
@@ -215,10 +213,16 @@ function setNextTheme() {
   document.querySelector(`.fa-solid.fa-${themes[currentTheme].iconClass}`).style.display = 'inline';
 
   if (themes[currentTheme].themeClass === 'dance') {
+    originalHeader = 'DISCOsession'.split('');
     jiggle();
   } else if (themes[currentTheme].themeClass === 'matrix') {
-    document.querySelector('h1').innerHTML = '101011101100111';
+    originalHeader = '101110100101111'.split('');
+  } else {
+    originalHeader = 'criticalsession'.split('');
   }
+
+  currHeader = [...originalHeader];
+  document.querySelector('h1').innerHTML = currHeader.join('');
 }
 
 let jiggleTimer = null;
