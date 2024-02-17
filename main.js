@@ -155,6 +155,68 @@ function revertDescription() {
   };
 }
 
+let currentTheme = 0;
+const themes = [
+  {
+    themeClass: '',
+    iconClass: 'moon',
+  },
+  {
+    themeClass: 'light',
+    iconClass: 'sun',
+  },
+  {
+    themeClass: 'matrix',
+    iconClass: 'code',
+  },
+  {
+    themeClass: 'text',
+    iconClass: 'pen-fancy',
+  },
+  {
+    themeClass: 'dance',
+    iconClass: 'face-smile',
+  },
+];
+function setNextTheme() {
+  const body = document.querySelector('body');
+
+  if (currentTheme >= 0) {
+    document.querySelector(`.fa-solid.fa-${themes[currentTheme].iconClass}`).style.display = 'none';
+  }
+
+  if (currentTheme === 4) {
+    clearTimeout(jiggleTimer);
+
+    document.querySelectorAll('.container *').forEach((p) => {
+      p.style.removeProperty('transform');
+      p.style.removeProperty('margin-top');
+    });
+  }
+
+  currentTheme++;
+  if (currentTheme > themes.length - 1) {
+    currentTheme = 0;
+  }
+
+  body.classList = themes[currentTheme].themeClass;
+  document.querySelector(`.fa-solid.fa-${themes[currentTheme].iconClass}`).style.display = 'inline';
+
+  if (themes[currentTheme].themeClass === 'dance') {
+    jiggle();
+  }
+}
+
+let jiggleTimer = null;
+function jiggle() {
+  document.querySelectorAll('.container *:not(header):not(.theme-select)').forEach((p) => {
+    p.style.transform = `rotate(${Math.floor(Math.random() * 14) - 7}deg)`;
+    p.style.marginTop = `${Math.floor(Math.random() * 20)}px`;
+  });
+
+  jiggleTimer = setTimeout(jiggle, 500);
+}
+
 workYearDiff();
 setTimeout(randomizeHeader, 1000);
 
@@ -165,4 +227,8 @@ document.querySelector('#betterDescriptionLink').onclick = () => {
   }
 
   replacingDescription = true;
+};
+
+document.querySelector('.theme-select').onclick = () => {
+  setNextTheme();
 };

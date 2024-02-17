@@ -5,11 +5,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>criticalsession</title>
+  <script type="module" src="/main.js"></script>
+  <script src="https://kit.fontawesome.com/89f968e1d0.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
   <div class="container">
-    <h1>criticalsession</h1>
+    <header>
+      <h1>criticalsession</h1>
+      <div class="theme-select">
+        <i class="fa-solid fa-moon" style="display:inline"></i>
+        <i class="fa-solid fa-sun"></i>
+        <i class="fa-solid fa-code"></i>
+        <i class="fa-solid fa-pen-fancy"></i>
+        <i class="fa-solid fa-face-smile"></i>
+      </div>
+    </header>
     <a href="#" id="stopRandomLink">stop doing that!</a>
     <p class="comment" style="height: 0; transition: all 200ms; overflow: hidden; padding: 0; margin: 0;"
       id="stopRandomComment">//
@@ -23,7 +34,6 @@
     <p>Here's a menu:</p>
     <div id="menu"></div>
   </div>
-  <script type="module" src="/main.js"></script>
 
 </body>
 
