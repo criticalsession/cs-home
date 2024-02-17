@@ -32,7 +32,7 @@ function randomizeHeader() {
       // revert
       for (let i = 0; i < currHeader.length; ++i) {
         if (currHeader[i] != originalHeader[i]) {
-          if (rand(100) > 40) {
+          if (rand(100) > 20) {
             currHeader[i] = originalHeader[i];
           }
         }
@@ -72,6 +72,8 @@ function randomizeHeader() {
           html = `<span>'*.,.*'¨'*.,.*'</span>`;
           break;
       }
+
+      currHeader = [...originalHeader];
     }
   } else {
     // if matrix theme
