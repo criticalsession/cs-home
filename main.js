@@ -29,7 +29,7 @@ function randomizeHeader() {
   // revert
   for (let i = 0; i < currHeader.length; ++i) {
     if (currHeader[i] != originalHeader[i]) {
-      if (Math.floor(Math.random() * 100) > 40) {
+      if (rand(100) > 40) {
         currHeader[i] = originalHeader[i];
       }
     }
@@ -37,8 +37,8 @@ function randomizeHeader() {
 
   // randomize
   for (let i = 0; i < currHeader.length; ++i) {
-    if (Math.floor(Math.random() * 100) > 90) {
-      currHeader[i] = randomChars[Math.floor(Math.random() * randomChars.length)];
+    if (rand(100) > 90) {
+      currHeader[i] = randomChars[rand(randomChars.length)];
     }
   }
 
@@ -48,8 +48,8 @@ function randomizeHeader() {
     html += currHeader[i] === originalHeader[i] ? currHeader[i] : `<span>${currHeader[i]}</span>`;
   }
 
-  if (Math.floor(Math.random() * 100) > 80) {
-    switch (Math.floor(Math.random() * 6)) {
+  if (rand(100) > 80) {
+    switch (rand(6)) {
       case 0:
         html = `<span>[</span>${html}<span>]</span>`;
         break;
@@ -73,7 +73,7 @@ function randomizeHeader() {
 
   document.querySelector('h1').innerHTML = html;
   if (doRandom) {
-    timer = setTimeout(randomizeHeader, Math.floor(Math.random() * 500) + 500);
+    timer = setTimeout(randomizeHeader, rand(500) + 500);
   }
 }
 
@@ -191,6 +191,7 @@ function setNextTheme() {
     document.querySelectorAll('.container *').forEach((p) => {
       p.style.removeProperty('transform');
       p.style.removeProperty('margin-top');
+      p.style.removeProperty('color');
     });
   }
 
@@ -209,12 +210,17 @@ function setNextTheme() {
 
 let jiggleTimer = null;
 function jiggle() {
-  document.querySelectorAll('.container *:not(header):not(.theme-select)').forEach((p) => {
-    p.style.transform = `rotate(${Math.floor(Math.random() * 14) - 7}deg)`;
-    p.style.marginTop = `${Math.floor(Math.random() * 20)}px`;
+  document.querySelectorAll('.container *:not(header):not(.theme-select):not(.theme-select > i)').forEach((p) => {
+    p.style.transform = `rotate(${rand(14) - 7}deg)`;
+    p.style.marginTop = `${rand(20)}px`;
+    p.style.color = `rgb(${rand(255)} ${rand(255)} ${rand(255)})`;
   });
 
   jiggleTimer = setTimeout(jiggle, 500);
+}
+
+function rand(i) {
+  return Math.floor(Math.random() * i);
 }
 
 workYearDiff();
